@@ -11,7 +11,7 @@ module.exports = {
         path: path.resolve(__dirname, './dist'),
         filename: 'bundle.js'
     },
-
+ 
     plugins: [
 
         // 自动把打包js注入到html
