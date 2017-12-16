@@ -1,6 +1,7 @@
 <template>
     <div>
-        测试
+        测试实打实
+    <router-view></router-view>
     </div>
 </template>
 
