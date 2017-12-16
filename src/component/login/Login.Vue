@@ -37,10 +37,12 @@
 export default {
   data() {
     return {
+      // 提交给后台的用户字段
       user: {
         uname: "",
         upwd: ""
       },
+      // 配置验证规则
       formRules: {
         uname: [
           { required: true, message: "请输入用户名", trigger: "blur" },
@@ -77,6 +79,7 @@ export default {
 </script>
 
 <style scoped lang="less">
+
 .login {
   .login_content {
     width: 400px;
