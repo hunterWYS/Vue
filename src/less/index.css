@@ -3,5 +3,13 @@ body,
 main {
   min-height: 100%;
   height: 100%;
-  background: #585b91;
+  background: cornflowerblue;
+}
+/* ===修改整体内容的内边框=== */
+.el-main {
+  padding: 15px 20px;
+}
+/* ===修改表头=== */
+.el-table th > .cell {
+  text-align: center;
 }

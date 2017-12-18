@@ -46,7 +46,11 @@ export default {
       formRules: {
         uname: [
           { required: true, message: "请输入用户名", trigger: "blur" },
-          { pattern: /\w{5,18}/,message: "长度在 4 到 18 个字符, 且只能为字母或数字",trigger: "blur"}
+          {
+            pattern: /\w{5,18}/,
+            message: "长度在 4 到 18 个字符, 且只能为字母或数字",
+            trigger: "blur"
+          }
         ],
         upwd: [
           { required: true, message: "请输入密码", trigger: "blur" },
@@ -56,13 +60,30 @@ export default {
     };
   },
   methods: {
+    // 登陆
+    login() {
+      // 登陆成功后
+      // 1.判断status是否为0，不为0给出错误提示
+      //2.如果为0 说明登陆成功，本地localStorage存储后端返回的用户信息
+      //3.跳转到后台管理首页
+      this.$http.post(this.$api.login, this.user).then(rsp => {
+        let { status, message } = rsp.data;//解析两个属性的值
+        if (status == 0) {
+          localStorage.setItem("user", JSON.stringify(message));
+          this.$router.push("/");
+          alert(rsp.data.message.realname);
+        } else {
+          alert("用户名或密码错误");
+        }
+      });
+    },
+
     //点击提交按钮，调用登录接口
     submitForm(formName) {
-    //先验证表单，在提交
-      this.$refs[formName].validate((result) => {
+      //先验证表单，在提交
+      this.$refs[formName].validate(result => {
         if (result) {
-          this.$http.post(this.$api.login,this.user)
-          .then(rsp=>alert(rsp.data.message.realname));
+          this.login();
         } else {
           alert("登录错误");
         }
@@ -79,7 +100,8 @@ export default {
 </script>
 
 <style scoped lang="less">
-
+/* &符号就是上级选择器的引用
+  这里使盒子处于页面中间位置 */
 .login {
   .login_content {
     width: 400px;
@@ -87,11 +109,14 @@ export default {
     border: 1px solid red;
     margin: 0 auto;
     margin-top: 200px;
+    box-shadow: 0px 1px;
     padding: 10px 0;
-    .login_img{
+    border-radius: 15px;
+
+    .login_img {
       padding: 5px 0;
     }
-    .login_from{
+    .login_from {
       padding: 2px 10px;
     }
   }
